@@ -1,10 +1,14 @@
 import requests
+from bs4 import BeautifulSoup
 
-#payload = {'searchkey': '33600'}
+menu = requests.get('https://www.dominos.fr/la-carte')
 
-#storelist = requests.get('https://commande.dominos.fr/eStore/fr/DominosApi/GetStores', params=payload)
-#print(storelist.json())
+bs = BeautifulSoup(menu.text, 'html.parser')
+Pizza_name_list = bs.find_all(class_='menu-entry')
+Pizza_ID_list = bs.find_all(class_='pizza-image')
 
-payload = {'pageCode': 'ProductMenu', 'menuCode': 'Menu.Pizza'}
-menu = requests.get('https://commande.dominos.fr/eStore/fr/OffersAjax/GetOffersclear', params=payload)
-print(menu.text)
+k = len(Pizza_name_list)
+i = 0
+while(i<k):
+    print(Pizza_name_list[i].get_text(),'--',Pizza_ID_list[i]['id'][4:])
+    i+=1
