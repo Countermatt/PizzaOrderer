@@ -1,10 +1,6 @@
 #import
 import RPi.GPIO as GPIO
 import time
-import menu
-import store
-import LCD
-
 
 # Define GPIO to LCD mapping
 LCD_RS = 7
@@ -26,9 +22,9 @@ LCD_LINE_2 = 0xC0 # LCD RAM address for the 2nd line
 # Timing constants
 E_PULSE = 0.0005
 E_DELAY = 0.0005
-def main():
+
+def lcd_set_up():
   # Main program block
-  
   GPIO.setwarnings(False)
   GPIO.setmode(GPIO.BCM)       # Use BCM GPIO numbers
   GPIO.setup(LCD_E, GPIO.OUT)  # E
@@ -43,52 +39,6 @@ def main():
   # Initialise display
   lcd_init()
 
-  while True:
-
-        store_name_list = store.Store_Search('33170')[0]
-        k = len(store_name_list)
-        if(k == 0):
-            
-            lcd_byte(0x01, LCD_CMD)
-            lcd_string("No store located",LCD_LINE_1)
-            lcd_string("", LCD_LINE_2)
-            time.sleep(3)
-
-        elif(k == 1):
-            
-            lcd_byte(0x01, LCD_CMD)
-            lcd_string(store_name_list[0],LCD_LINE_1)
-            lcd_string("", LCD_LINE_2)
-            time.sleep(3)
-
-        else:
-            
-            if(k%2 == 0):
-                
-                i = 0
-                
-                while(i<k-1):
-                    
-                    lcd_byte(0x01, LCD_CMD)
-                    lcd_string(store_name_list[i],LCD_LINE_1)
-                    lcd_string(store_name_list[i+1], LCD_LINE_2)
-                    time.sleep(3)
-                    i+=1
-
-            else:
-                
-                while(i<k-2):
-                    
-                    lcd_byte(0x01, LCD_CMD)
-                    lcd_string(store_name_list[i],LCD_LINE_1)
-                    lcd_string(store_name_list[i+1], LCD_LINE_2)
-                    time.sleep(3)
-                    i+=1
-
-                lcd_byte(0x01, LCD_CMD)
-                lcd_string(store_name_list[k-1],LCD_LINE_1)
-                lcd_string("", LCD_LINE_2)
-                time.sleep(3)
 
 def lcd_init():
   # Initialise display
