@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-
+import lcd
+import incremental_codeur
 
 def Pizza_name_list():
 
@@ -95,3 +96,40 @@ def Drink_ID_list():
         drink_ID_list[k] = drink_ID_list[k]['id'][4:]
     
     return(drink_ID_list)
+
+def MenuSelect():
+    pizzalist = Pizza_name_list()
+    calzlist = Calz_name_list()
+    dessertlist = Dessert_name_list()
+    drinklist = Drink_name_list()
+    i = 0
+    menulist = ["Pizza","Calz","Dessert","Drink","Fin commande"]
+    while(i == 0):
+        menustatus = 0
+        lcd_byte(0x01, LCD_CMD)
+        lcd_string(menulist[0], LCD_LINE_1)
+        lcd_string(menulist[1], LCD_LINE_2)
+        coder = 0
+        while(menustatus == 0):
+            menunumber = 0
+            if(menunumber < 4):
+                lcd_byte(0x01, LCD_CMD)
+                lcd_string(text[k], LCD_LINE_1)
+                lcd_string(text[k+1], LCD_LINE_2)
+            else:
+                lcd_byte(0x01, LCD_CMD)
+                lcd_string(text[k], LCD_LINE_1)
+            if(coder == 2):
+                if(menunumber > 0):
+                    menunumber -=1
+            elif(coder == 3):
+                if(menunumber < 4):
+                    menunumber +=1
+            elif(coder == 1):
+               menustatus = 1
+            coder = codeur()
+        
+
+            
+
+

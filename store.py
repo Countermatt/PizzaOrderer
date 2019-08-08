@@ -94,5 +94,6 @@ def StoreSelect():
                     else:
                         number -= 1
                 lcd_print(store_name_list[number])
+                status = codeur()
             i = 1
     return(store_name_ID[number])
