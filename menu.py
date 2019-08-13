@@ -138,7 +138,7 @@ def ProductSelect(menunumber):
     elif(menunumber == 3):
         menucontentname = Drink_name_list()
         menucontentID = Drink_ID_list()
-    elif(menunumber == 0)
+    elif(menunumber == 0):
         return([0,0])
     
 

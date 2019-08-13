@@ -17,7 +17,7 @@ def coder():
         if(GPIO.intput(CODER_SW) == True):
             status = 1
             return(status)
-        elif(CLK == 0 and DT == 0):
+        elif(CLKstate == 0 and DTstate == 0):
             if(previousStateDT == 0 and previousStateCLK == 1):
                 status = 3
                 return(status)
