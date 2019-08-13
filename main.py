@@ -4,6 +4,13 @@ import store
 import lcd
 import incremental_codeur
 
+
+def setup():
+        BUTTON = 16
+        codersetup()
+        lcd_set_up()
+        GPIO.setup(BUTTON, GPIO.IN)
+
 def lcd_print(text):
     if(len(text)<=16):
         lcd_byte(0x01, LCD_CMD)
@@ -20,5 +27,10 @@ def main():
     while True:
             
         storeID = StoreSelect()
-
+        commande = []
+        while(commande[-1][0] != 0):
+                commande +=ProductSelect(PrimaryMenu())
+        
+        
+        
 

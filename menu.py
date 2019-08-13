@@ -97,39 +97,98 @@ def Drink_ID_list():
     
     return(drink_ID_list)
 
-def MenuSelect():
-    pizzalist = Pizza_name_list()
-    calzlist = Calz_name_list()
-    dessertlist = Dessert_name_list()
-    drinklist = Drink_name_list()
-    i = 0
-    menulist = ["Pizza","Calz","Dessert","Drink","Fin commande"]
-    while(i == 0):
-        menustatus = 0
-        lcd_byte(0x01, LCD_CMD)
-        lcd_string(menulist[0], LCD_LINE_1)
-        lcd_string(menulist[1], LCD_LINE_2)
-        coder = 0
-        while(menustatus == 0):
-            menunumber = 0
-            if(menunumber < 4):
-                lcd_byte(0x01, LCD_CMD)
-                lcd_string(text[k], LCD_LINE_1)
-                lcd_string(text[k+1], LCD_LINE_2)
-            else:
-                lcd_byte(0x01, LCD_CMD)
-                lcd_string(text[k], LCD_LINE_1)
-            if(coder == 2):
-                if(menunumber > 0):
-                    menunumber -=1
-            elif(coder == 3):
-                if(menunumber < 4):
-                    menunumber +=1
-            elif(coder == 1):
-               menustatus = 1
-            coder = codeur()
+def PrimaryMenu():
+    menulist = ["Pizza","Calz","Dessert","Drink","Resume commande"]
+    menustatus = 0
+    lcd_byte(0x01, LCD_CMD)
+    lcd_string(menulist[0], LCD_LINE_1)
+    lcd_string(menulist[1], LCD_LINE_2)
+    coder = 0
+    menunumber = 0
+    while(menustatus == 0):
         
+        if(menunumber < 4):
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string(menulist[k], LCD_LINE_1)
+            lcd_string(menulist[k+1], LCD_LINE_2)
+        else:
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string(menulist[k], LCD_LINE_1)
+        if(coder == 2):
+            if(menunumber > 0):
+                menunumber -=1
+        elif(coder == 3):
+            if(menunumber < 4):
+                menunumber +=1
+        elif(coder == 1):
+            menustatus = 1
+        coder = codeur()
+    return(menunumber)
 
-            
+def ProductSelect(menunumber):
+    if(menunumber == 0):
+        menucontentname = Pizza_name_list()
+        menucontentID = Pizza_ID_list()
+    elif(menunumber == 1):
+        menucontentname = Calz_name_list()
+        menucontentID = Calz_ID_list()
+    elif(menunumber == 2):
+        menucontentname = Dessert_name_list()
+        menucontentID = Dessert_ID_list()
+    elif(menunumber == 3):
+        menucontentname = Drink_name_list()
+        menucontentID = Drink_ID_list()
+    elif(menunumber == 0)
+        return([0,0])
+    
 
-
+    menustatus = 0
+    itemnumber = 0
+    menulen = len(menucontentname)
+    coder = 0
+    while(menustatus == 0):
+        if(itemnumber < menulen - 1):
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string(menulist[k], LCD_LINE_1)
+            lcd_string(menulist[k+1], LCD_LINE_2)
+        else:
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string(menulist[k], LCD_LINE_1)
+        
+        if(coder == 2):
+            if(itemnumber > 0):
+                itemnumber -=1
+        elif(coder == 3):
+            if(itemnumber < 4):
+                itemnumber +=1
+        elif(coder == 1):
+            menustatus = 1
+        coder = codeur()
+    menustatus = 0
+    menunumber = 0
+    while(menustatus == 0):
+        if(menunumber == 0):
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string("confirmation", LCD_LINE_1)
+            lcd_string("oui", LCD_LINE_2)
+        else:
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string("confirmation", LCD_LINE_1)
+            lcd_string("non", LCD_LINE_2)
+        
+        if(coder == 2):
+            if(menunumber == 0):
+                menunumber =1
+        elif(coder == 3):
+            if(menunumber == 1):
+                menunumber = 0
+        elif(coder == 1):
+            menustatus = 1
+        coder = codeur()
+    if(menunumber == 0):        
+        return([menucontentname[menunumber],menucontentID[menunumber]])
+    else:
+        return([1,1])
+        
+        
+    

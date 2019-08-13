@@ -1,0 +1,14 @@
+Description=Pizza Orderer service
+
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+ExecStart=python3 /home/pi/pizzaorderer/main.ppy
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
