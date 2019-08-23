@@ -28,10 +28,16 @@ def main():
             
         storeID = StoreSelect()
         commande = []
+        
         while(commande[-1][0] != 0):
                 commande +=ProductSelect(PrimaryMenu())
         commandefinal = []
+        
         for item in commande:
                 if(item[0] != 1 or item[0] != 0):
                         commandefinal += item
+        confirmation = CommandeConfirm(command)
+        
+        if(not(confirmation)):
+                continue
 

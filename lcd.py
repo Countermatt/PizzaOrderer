@@ -33,7 +33,6 @@ def lcd_set_up():
   GPIO.setup(LCD_D6, GPIO.OUT) # DB6
   GPIO.setup(LCD_D7, GPIO.OUT) # DB7
   
-  GPIO.setup(BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)  # BUTTON
 
   # Initialise display
   lcd_init()
@@ -124,3 +123,4 @@ if __name__ == '__main__':
     time.sleep(2)
     lcd_string("", LCD_LINE_1)
     GPIO.cleanup()
+    

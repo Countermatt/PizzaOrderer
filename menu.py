@@ -106,7 +106,7 @@ def PrimaryMenu():
     coder = 0
     menunumber = 0
     while(menustatus == 0):
-        
+        coder = codeur()
         if(menunumber < 4):
             lcd_byte(0x01, LCD_CMD)
             lcd_string(menulist[k], LCD_LINE_1)
@@ -122,7 +122,7 @@ def PrimaryMenu():
                 menunumber +=1
         elif(coder == 1):
             menustatus = 1
-        coder = codeur()
+        coder = 0
     return(menunumber)
 
 def ProductSelect(menunumber):
@@ -147,6 +147,7 @@ def ProductSelect(menunumber):
     menulen = len(menucontentname)
     coder = 0
     while(menustatus == 0):
+        coder = codeur()
         if(itemnumber < menulen - 1):
             lcd_byte(0x01, LCD_CMD)
             lcd_string(menulist[k], LCD_LINE_1)
@@ -163,10 +164,11 @@ def ProductSelect(menunumber):
                 itemnumber +=1
         elif(coder == 1):
             menustatus = 1
-        coder = codeur()
+        coder = 0
     menustatus = 0
     menunumber = 0
     while(menustatus == 0):
+        coder = codeur()
         if(menunumber == 0):
             lcd_byte(0x01, LCD_CMD)
             lcd_string("confirmation", LCD_LINE_1)
@@ -184,11 +186,61 @@ def ProductSelect(menunumber):
                 menunumber = 0
         elif(coder == 1):
             menustatus = 1
-        coder = codeur()
+        coder = 0
     if(menunumber == 0):        
         return([menucontentname[menunumber],menucontentID[menunumber]])
     else:
         return([1,1])
+
+
+def CommandeConfirm(command):
+    status = 0
+    commandlen = len(command)
+    
+    coder = 0
+    commandnumber = 0
+    while(status == 0):
+        coder = codeur()
+        if(commandnumber < commandlen):
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string(command[commandnumber], LCD_LINE_1)
+        else:
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string("confirm", LCD_LINE_1)
+        if(coder == 2):
+            if(commandnumber > 0):
+                commandnumber -=1
+        elif(coder == 3):
+            if(commandnumber < commandlen):
+                commandnumber += 1
+        elif(coder == 1):
+            if(commandnumber ==commandlen):
+                status = 1
+        coder = 0
+    status = 0
+    confirmnumber = 0
+    while(status == 0):
+        coder = codeur()
+        if(confirmnumber == 0):
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string("confirmation", LCD_LINE_1)
+            lcd_string("oui", LCD_LINE_2)
+        else:
+            lcd_byte(0x01, LCD_CMD)
+            lcd_string("confirmation", LCD_LINE_1)
+            lcd_string("non", LCD_LINE_2)
         
-        
+        if(coder == 2):
+            if(confirmnumber == 0):
+                confirmnumber =1
+        elif(coder == 3):
+            if(confirmnumber == 1):
+                confirmnumber = 0
+        elif(coder == 1):
+            status = 1
+        coder = 0
+    if(confirmnumber == 0):        
+        return(1)
+    else:
+        return(0)
     
